@@ -11,7 +11,6 @@ const sample_rate = 44100;
 const amplitude: f32 = 0.5;
 const min_note_duration: f32 = 0.05; // seconds
 const max_note_duration: f32 = 0.5; // seconds
-const total_duration: f32 = 5.0; // total melody duration
 
 pub fn main(init: std.process.Init) !void {
     const io = init.io;
@@ -26,6 +25,12 @@ pub fn main(init: std.process.Init) !void {
     var rng = std.Random.DefaultPrng.init(@intCast(Io.Timestamp.now(io, .real).nanoseconds));
 
     var elapsed: f32 = 0.0;
+    const args = try init.minimal.args.toSlice(allocator);
+    var total_duration_arg: ?f32 = null;
+    for (args, 0..) |arg, idx| {
+        if (idx == 1) total_duration_arg = try std.fmt.parseFloat(f32, arg);
+    }
+    const total_duration = total_duration_arg orelse 1.0;
     while (elapsed < total_duration) {
         const semitone_offset = std.Random.intRangeAtMost(rng.random(), i32, -12, 12);
         const freq = 440.0 * math.pow(f32, 2.0, @floatFromInt(@divFloor(semitone_offset, @as(i32, 12.0))));
