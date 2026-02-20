@@ -1,4 +1,4 @@
-// zig run src/main.zig miniaudio.c -lc -I .
+// zig run src/main.zig miniaudio.c -lc -I . -- 5.0
 
 const std = @import("std");
 const math = std.math;
