@@ -9,8 +9,8 @@ const c = @cImport({
 
 const sample_rate = 44100;
 const amplitude: f32 = 0.5;
-const min_note_duration: f32 = 0.05; // seconds
-const max_note_duration: f32 = 0.5; // seconds
+const min_note_duration: f32 = 0.02; // seconds
+const max_note_duration: f32 = 0.3; // seconds
 
 pub fn main(init: std.process.Init) !void {
     const io = init.io;
